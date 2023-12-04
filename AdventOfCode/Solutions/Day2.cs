@@ -35,6 +35,34 @@ namespace AdventOfCode.Solutions
             return possibleGameSum;
         }
 
+        /// <summary>
+        /// For each game, find the minimum set of cubes that must have been present. 
+        /// What is the sum of the power of these sets?
+        /// </summary>
+        /// <returns></returns>
+        public static int Part2()
+        {
+            int maxRed, maxGreen, maxBlue, powers, powerSum = 0;
+
+            foreach (string line in File.ReadLines(@"Inputs/day2.txt"))
+            {  
+
+                var redMatches = Regex.Matches(line, @"\d+ red");
+                maxRed = BiggestMuchValue(redMatches);
+
+                var greenMatches = Regex.Matches(line, @"\d+ green");
+                maxGreen = BiggestMuchValue(greenMatches);
+
+                var blueMatches = Regex.Matches(line, @"\d+ blue");
+                maxBlue = BiggestMuchValue(blueMatches);
+
+                powers = maxRed * maxGreen * maxBlue;
+                powerSum += powers;
+            }
+
+            return powerSum;
+        }
+
         private static bool IsCubeCountPossible(MatchCollection matches, int maxCubeCount)
         {
             foreach (Match match in matches)
@@ -48,6 +76,21 @@ namespace AdventOfCode.Solutions
             }
 
             return true;
+        }
+
+        private static int BiggestMuchValue(MatchCollection matches)
+        {
+            int maxValue = 0;
+
+            foreach (Match match in matches)
+            {
+                var numStr = Regex.Match(match.Value, @"\d+").Value;
+                var number = int.Parse(numStr);
+                if (number > maxValue)
+                    maxValue = number;
+            }
+
+            return maxValue;
         }
     }
 }
