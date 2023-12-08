@@ -18,5 +18,7 @@ class Program
         Console.WriteLine($"Day 6, part 1: {Day6.Part1()}");
         Console.WriteLine($"Day 6, part 2: {Day6.Part2()}");
         Console.WriteLine($"Day 7, part 1: {Day7.Part1()}");
+        Console.WriteLine($"Day 7, part 2: TODO");
+        Console.WriteLine($"Day 8, part 1: {Day8.Part1()}");
     }
 }
