@@ -40,5 +40,45 @@ namespace AdventOfCode.Solutions
 
             return sum;
         }
+
+        /// <summary>
+        /// Analyze your OASIS report again, this time extrapolating the previous value for each history. 
+        /// What is the sum of these extrapolated values?
+        /// </summary>
+        /// <returns></returns>
+        public static int Part2()
+        {
+            int firstElement, sum = 0;
+            List<List<int>> history;
+            List<int> innerList, lastList;
+
+            foreach (string line in File.ReadLines(@"Inputs/day9.txt"))
+            {  
+                history = new();
+                innerList = line.Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x)).ToList();
+                history.Add(innerList);
+
+                while (!innerList.All(x => x == 0))
+                {
+                    innerList = new();
+                    lastList = history.Last();
+                    for (var i = 0; i < lastList.Count - 1; i++)
+                    {
+                        innerList.Add(lastList[i+1] - lastList[i]);
+                    }
+                    history.Add(innerList);
+                }
+
+                firstElement = 0;
+                for (var i = history.Count - 2; i >= 0; i--)
+                {
+                    firstElement = history.ElementAt(i).First() - firstElement;
+                }
+
+                sum += firstElement;
+            }
+
+            return sum;
+        }
     }
 }
